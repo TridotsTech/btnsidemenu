@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include btn_side_menu_custom_app *.css
+recursive-include btn_side_menu_custom_app *.csv
+recursive-include btn_side_menu_custom_app *.html
+recursive-include btn_side_menu_custom_app *.ico
+recursive-include btn_side_menu_custom_app *.js
+recursive-include btn_side_menu_custom_app *.json
+recursive-include btn_side_menu_custom_app *.md
+recursive-include btn_side_menu_custom_app *.png
+recursive-include btn_side_menu_custom_app *.py
+recursive-include btn_side_menu_custom_app *.svg
+recursive-include btn_side_menu_custom_app *.txt
+recursive-exclude btn_side_menu_custom_app *.pyc
