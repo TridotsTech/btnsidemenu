@@ -11,8 +11,10 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/btn_side_menu_custom_app/css/btn_side_menu_custom_app.css"
-# app_include_js = "/assets/btn_side_menu_custom_app/js/btn_side_menu_custom_app.js"
+app_include_css = ["https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600&display=swap","/assets/btn_side_menu_custom_app/css/frappe_side_menu.css","/assets/btn_side_menu_custom_app/css/ui-icons-regular.css"]
+app_include_js = ["/assets/btn_side_menu_custom_app/js/frappe_side_menu.js","/assets/btn_side_menu_custom_app/js/jquery.slimscroll.js"]
+
+on_session_creation  = "btn_side_menu_custom_app.btn_side_menu_custom_app.api.set_default_route"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/btn_side_menu_custom_app/css/btn_side_menu_custom_app.css"

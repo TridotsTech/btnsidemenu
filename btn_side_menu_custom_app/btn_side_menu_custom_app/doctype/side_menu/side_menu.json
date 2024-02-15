@@ -1,0 +1,151 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:label",
+ "creation": "2024-02-02 13:55:33.224813",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "disable",
+  "is_static_link",
+  "has_sub_menu",
+  "is_group",
+  "menu_group",
+  "column_break_azj6",
+  "menu_type",
+  "is_single_doc",
+  "static_link",
+  "menu_doc",
+  "icon_image",
+  "menu_icon",
+  "sequence_number",
+  "sub_menus_section",
+  "sub_menu"
+ ],
+ "fields": [
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Label",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "label": "Disable"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_static_link",
+   "fieldtype": "Check",
+   "label": "Is Static Link"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_sub_menu",
+   "fieldtype": "Check",
+   "label": "Has Sub Menu"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group?"
+  },
+  {
+   "depends_on": "eval:doc.is_group==1",
+   "fieldname": "menu_group",
+   "fieldtype": "Link",
+   "label": "Menu Group",
+   "options": "Menu Group"
+  },
+  {
+   "fieldname": "column_break_azj6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:((doc.has_sub_menu==0 && doc.is_static_link==0))",
+   "fieldname": "menu_type",
+   "fieldtype": "Link",
+   "label": "Menu Type",
+   "options": "DocType"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_single_doc",
+   "fieldtype": "Check",
+   "label": "Is Single Doc"
+  },
+  {
+   "depends_on": "eval:((doc.has_sub_menu==0 && doc.is_static_link==1))",
+   "fieldname": "static_link",
+   "fieldtype": "Data",
+   "label": "Static Link"
+  },
+  {
+   "depends_on": "eval:((doc.has_sub_menu==0 && doc.is_static_link==0 && doc.menu_type))",
+   "fieldname": "menu_doc",
+   "fieldtype": "Dynamic Link",
+   "label": "Menu Doc",
+   "options": "menu_type"
+  },
+  {
+   "fieldname": "icon_image",
+   "fieldtype": "Attach Image",
+   "label": "Icon Image"
+  },
+  {
+   "fieldname": "menu_icon",
+   "fieldtype": "Data",
+   "label": "Icon Class"
+  },
+  {
+   "fieldname": "sequence_number",
+   "fieldtype": "Int",
+   "label": "Sequence Number"
+  },
+  {
+   "depends_on": "eval:doc.has_sub_menu==1",
+   "fieldname": "sub_menus_section",
+   "fieldtype": "Section Break",
+   "label": "Sub Menus"
+  },
+  {
+   "fieldname": "sub_menu",
+   "fieldtype": "Table",
+   "label": "Sub Menu",
+   "options": "Sub Menu"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-02-03 16:03:04.021651",
+ "modified_by": "Administrator",
+ "module": "Btn Side Menu Custom App",
+ "name": "Side Menu",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

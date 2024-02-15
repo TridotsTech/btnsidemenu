@@ -1,0 +1,112 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-02 13:55:30.011465",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sub_menu_title",
+  "is_static_link",
+  "static_link",
+  "sub_menu_type",
+  "is_single",
+  "sub_menu_doc",
+  "report_type",
+  "column_break_2jab",
+  "sub_menu_label",
+  "sub_menu_image_icon",
+  "sub_menu_icon",
+  "disable"
+ ],
+ "fields": [
+  {
+   "fieldname": "sub_menu_title",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sub Menu Group",
+   "options": "Sub Menu Group"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_static_link",
+   "fieldtype": "Check",
+   "label": "Is Static Link"
+  },
+  {
+   "depends_on": "eval:((doc.is_static_link==1))",
+   "fieldname": "static_link",
+   "fieldtype": "Data",
+   "label": "Static Link"
+  },
+  {
+   "depends_on": "eval:((doc.is_static_link==0))",
+   "fieldname": "sub_menu_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sub Menu Type",
+   "options": "DocType"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:((doc.sub_menu_type==\"DocType\" && doc.is_static_link==0))",
+   "fieldname": "is_single",
+   "fieldtype": "Check",
+   "label": "Is Single"
+  },
+  {
+   "depends_on": "eval:((doc.is_static_link==0))",
+   "fieldname": "sub_menu_doc",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Sub Menu Doc",
+   "options": "sub_menu_type"
+  },
+  {
+   "depends_on": "eval:((doc.sub_menu_type==\"Report\"))",
+   "fieldname": "report_type",
+   "fieldtype": "Select",
+   "label": "Report Type",
+   "options": "Query Report\nScript Report"
+  },
+  {
+   "fieldname": "column_break_2jab",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sub_menu_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Sub Menu Label"
+  },
+  {
+   "fieldname": "sub_menu_image_icon",
+   "fieldtype": "Attach Image",
+   "label": "Sub Menu Image Icon"
+  },
+  {
+   "fieldname": "sub_menu_icon",
+   "fieldtype": "Data",
+   "label": "Sub Menu Icon"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "label": "Disable"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-02-02 17:52:35.781471",
+ "modified_by": "Administrator",
+ "module": "Btn Side Menu Custom App",
+ "name": "Sub Menu",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
