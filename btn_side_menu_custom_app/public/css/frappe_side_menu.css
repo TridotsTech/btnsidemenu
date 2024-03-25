@@ -10,7 +10,7 @@
     display: none;
 }
 .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 100%; 
+    max-width: 100%;
 }
 
 li.treeview.drop-down i.fa{
