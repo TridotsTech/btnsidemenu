@@ -16,6 +16,7 @@
 li.treeview.drop-down i.fa{
     padding: 0;
     font-size: 18px;
+    margin-right: 5px;
 }
 p.menu-label {
     font-size: 13px;
@@ -191,7 +192,8 @@ p.menu-label {
     margin-left: 0 !important;
 } */
 .sidebar-big-menu ul.submenu li a {
-    padding: .625rem 1.5rem !important;
+    padding: 10px 0px !important;
+    gap: 20px;
 }
     
 .sidebar-small-menu .col.layout-main-section-wrapper,
@@ -245,17 +247,17 @@ i.fa.fi-rr-menu-burger{
     transition:.1s;
   
 }
-.sidebar-small-menu .pointer{
+/* .sidebar-small-menu .pointer{
     display: none;
-}
+} */
 .sidebar-big-menu .pointer{
     display: block !important;
     font-weight: 400;
     cursor: pointer;
-    width: 27px;
+    /* width: 27px; */
     float: left;
     text-align: center;
-    margin: 0px 6px 0px -6px;
+    margin: 0px 0px 0px 32px;
 }
   
 .vertical-nav li.current {

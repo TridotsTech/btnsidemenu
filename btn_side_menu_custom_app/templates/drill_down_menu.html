@@ -59,41 +59,94 @@
                                                 <div>{{ k.sub_menu_title }}</div>
                                             </li>
                                             {% for z in k.sub_menu_list %}
-                                                {% if z %}
-                                                    {% if z.is_static_link == 0 %}
-                                                        <li>
-                                                            <a class="submenu-link" id="{{ z.route }}" onclick="go_to_page(this)">
-                                                                {% if z.sub_menu_image_icon %}
-                                                                    <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                    {% if z %}
+                                                        {% if z.is_static_link == 0 %}
+                                                            {% if z.sub_menu_type == "Page" %}
+                                                                <li>
+                                                                    <a class="submenu-link" id="/app/{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "DocType" %}
+                                                                {% if z.is_single == 0 %}
+                                                                    <li>
+                                                                        <a class="submenu-link" id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
                                                                 {% else %}
-                                                                    <b class="pointer">-</b>
-                                                                    {% if center_menu == 1 %}<br />{% endif %}
+                                                                    <li>
+                                                                        <a class="submenu-link" id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
                                                                 {% endif %}
-                                                                {{ z.sub_menu_label }}
-                                                            </a>
-                                                        </li>
-                                                    {% else %}
-                                                        <li>
-                                                            <a class="submenu-link" href="/app/{{ z.static_link }}">
-                                                                {% if z.sub_menu_image_icon %}
-                                                                    <img src="{{ z.sub_menu_image_icon }}" style="width: 22px;">
-                                                                {% else %}
-                                                                    <b class="pointer">-</b>
-                                                                    {% if center_menu == 1 %}<br />{% endif %}
-                                                                {% endif %}
-                                                                {{ z.sub_menu_label }}
-                                                            </a>
-                                                        </li>
+                                                            {% elif z.sub_menu_type == "Report" %}
+                                                                <li>
+                                                                    <a class="submenu-link" id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "Dashboard" %}
+                                                                <li>
+                                                                    <a class="submenu-link" id="/app/dashboard-view/{{ z.sub_menu_doc }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            
+                                                        {% else %}
+                                                            <li>
+                                                                <a class="submenu-link" href="/app/{{ z.static_link }}">
+                                                                    {% if z.sub_menu_image_icon %}
+                                                                        <img src="{{ z.sub_menu_image_icon }}" style="width: 22px;">
+                                                                    {% else %}
+                                                                        <b class="pointer">-</b>
+                                                                        {% if center_menu == 1 %}<br />{% endif %}
+                                                                    {% endif %}
+                                                                    <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
                                                     {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
+                                                {% endfor %}
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
                                 {% endif %}
                                 <!-- {% if u.menu_type == "DocType" and u.is_single_doc == 0 %}
                                     <li>
-                                        <a class="menu treeview drop-down" id="/app/{{ u.route }}" onclick="go_to_page(this)">                         
+                                        <a class="menu treeview drop-down" id="/app/{{ u.route }}" onclick="go_to_page(this)" style="display: flex;">                         
                                             <i class="{% if u.menu_icon %}{{ u.menu_icon }}{% else %}fa fa-address-card{% endif %} navbar-icon"></i>{% if center_menu == 1 %}<br> {% endif %} 
                                         </a>
                                     </li>
@@ -138,21 +191,28 @@
                         <p class="menu-group menu-group-small" >...</p>
                         {% for u in items %}
                         <li class="treeview drop-down">
-                            <a class="menu" {% if not u.submenu %}href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"{% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;">
-                                <span class="span"  style="font-size: 15px; ">
+                            <a class="menu" {% if not u.submenu %}
+                                {% if u.menutype == "Dashboard" %}
+                                    href="/app/dashboard-view/{{ u.menu_doc | lower | replace(' ', '-') }}"
+                                {% else %}
+                                    href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"
+                                {% endif %}
+                            {% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;">
+                                <span class="span" style="font-size: 15px;">
                                     {% if u.icon_image %}
-                                        <img src="{{ u.icon_image }}" class="image-icon" style="padding: 0px; height: 18px;margin-right: 10px;">
+                                        <img src="{{ u.icon_image }}" class="image-icon" style="padding: 0px; height: 18px; margin-right: 10px;">
                                     {% elif u.menu_icon %}
-                                        <i class="{{ u.menu_icon }} navbar-icon" ></i>
+                                        <i class="{{ u.menu_icon }} navbar-icon"></i>
                                     {% else %}
-                                        <i class="fa fa-bar-chart navbar-icon" ></i>
+                                        <i class="fa fa-bar-chart navbar-icon"></i>
                                     {% endif %}
-                                    <p class='menu-label'>{{ u.label }}</p>
+                                    <p class="menu-label">{{ u.label }}</p>
                                     {% if u.has_sub_menu %}
-                                    <i class="fa fa-angle-right" aria-hidden="true" style="float: right; font-size: 18px;margin-right: 0;width: auto;"></i>
+                                        <i class="fa fa-angle-right" aria-hidden="true" style="float: right; font-size: 18px; margin-right: 0; width: auto;"></i>
                                     {% endif %}
                                 </span>
                             </a>
+
                             {% if u.submenu is not none %}
                                     <ul class="submenu">
                                         {% for k in u.submenu %}
@@ -161,19 +221,72 @@
                                                     <div>{{ k.sub_menu_title }}</div>
                                                 </li>
                                                 {% for z in k.sub_menu_list %}
-                                                    {% if z is not none %}
+                                                    {% if z %}
                                                         {% if z.is_static_link == 0 %}
-                                                            <li>
-                                                                <a class="routeLink" id="{{ z.route }}" onclick="go_to_page(this)">
-                                                                    {% if z.sub_menu_image_icon %}
-                                                                        <img src="{{z.sub_menu_image_icon}}" alt="Mitigations" class="navbar-image" style="width: 22px;">
-                                                                    {% else %}
-                                                                        <b class="pointer">-</b>
-                                                                        {% if center_menu == 1 %}<br />{% endif %}
-                                                                    {% endif %}
-                                                                    {{ z.sub_menu_label }}
-                                                                </a>
-                                                            </li>
+                                                            {% if z.sub_menu_type == "Page" %}
+                                                                <li>
+                                                                    <a id="/app/{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "DocType" %}
+                                                                {% if z.is_single == 0 %}
+                                                                    <li>
+                                                                        <a id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <li>
+                                                                        <a id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% elif z.sub_menu_type == "Report" %}
+                                                                <li>
+                                                                    <a id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "Dashboard" %}
+                                                                <li>
+                                                                    <a id="/app/dashboard-view/{{ z.sub_menu_doc }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            
                                                         {% else %}
                                                             <li>
                                                                 <a href="/app/{{ z.static_link }}">
@@ -183,7 +296,7 @@
                                                                         <b class="pointer">-</b>
                                                                         {% if center_menu == 1 %}<br />{% endif %}
                                                                     {% endif %}
-                                                                    {{ z.sub_menu_label }}
+                                                                    <span class="submenu-lable">{{ z.sub_menu_label }}</span>
                                                                 </a>
                                                             </li>
                                                         {% endif %}
@@ -191,6 +304,7 @@
                                                 {% endfor %}
                                             {% endif %}
                                         {% endfor %}
+
                                     </ul>
                                 {% endif %}
                             </li>
@@ -328,6 +442,7 @@
                 function go_to_page(event, element) {
                     event.preventDefault(); 
                     var route = element.getAttribute('id');
+                    console.log("check route",route)
                     if (route) {
                         window.location.href = '/app/' + route;
                     }
@@ -387,6 +502,10 @@
             }
             .submenu-link{
                 margin-left: 9px;
+            }
+            .submenu-lable{
+                text-wrap: wrap;
+
             }
             .submenu{
                 background-color: {{side_menu_settings.sub_menu_background_color}};
@@ -663,8 +782,8 @@
                     margin-top:30px !important;
                 }
                 img#app-logo{
-                    height: 39px;
-                    padding: 11px 50px;
+                    height: 45px;
+                    padding: 10px 50px;
                     margin-top: 10px;
                 }
                 .small_menu_logo,.app-logo-image{
@@ -699,8 +818,10 @@
                 .vertical-nav .sub-menu li a {
                     width: 100%;
                     margin-left: 6px !important;
+                    display: flex;
                     padding: 1px 0px 6px 10px;
                     float: left !important;
+                    gap: 10px;
                 }
                 .sidebar-big-menu .main-sidebar .sidebar-menu > li > a span{
                     text-align: left !important;
@@ -723,7 +844,8 @@
                }
                .sidebar-big-menu li.treeview.drop-down i.fa{
                 float: left;
-                width: 27px;
+                /* width: 27px; */
+                margin-right: 5px;
                 margin-left: 1px;
                }
                
@@ -766,7 +888,7 @@
                     display: none;
                 } */
                 .vertical-nav .sub-menu li{
-                    padding:5px 10px !important;height:40px;
+                    padding:5px 10px !important;height:auto;width: 230px;
                 }
                 .sidebar-small-menu .sidebar-menu{
                     transition:.1s !important;
