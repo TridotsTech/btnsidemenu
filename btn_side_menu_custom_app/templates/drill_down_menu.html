@@ -194,6 +194,8 @@
                             <a class="menu" {% if not u.submenu %}
                                 {% if u.menutype == "Dashboard" %}
                                     href="/app/dashboard-view/{{ u.menu_doc | lower | replace(' ', '-') }}"
+                                {% elif u.menutype == "Report" %}
+                                    href="/app/query-report/{{ u.menu_doc }}"
                                 {% else %}
                                     href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"
                                 {% endif %}
@@ -610,7 +612,7 @@
                 padding: 5px 15px;
                 font-family: 'Poppins', sans-serif;
                 color:{{side_menu_settings.sub_menu_text_color}} !important;
-
+                
                 margin-bottom: 0;
                 margin-top: 10px;
             }
@@ -668,6 +670,7 @@
             }
             .vertical-nav li.menu-group{
                 height:30px;
+                /* display: contents; */
             }
             .main-sidebar .sidebar-menu::-webkit-scrollbar{
                 display: none;
