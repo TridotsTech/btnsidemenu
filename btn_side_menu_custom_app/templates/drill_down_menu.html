@@ -190,7 +190,7 @@
                         <p class="menu-group menu-group-big">{{ menu_group }}</p>
                         <p class="menu-group menu-group-small" >...</p>
                         {% for u in items %}
-                        <li class="treeview drop-down"> 
+                        <li class="treeview drop-down">
                             <a class="menu" {% if not u.submenu %}
                                 {% if u.menutype == "Dashboard" %}
                                     href="/app/dashboard-view/{{ u.menu_doc | lower | replace(' ', '-') }}"
