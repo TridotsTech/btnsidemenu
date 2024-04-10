@@ -18,7 +18,7 @@ def login_erp(userId):
             #     "usr":userCredJSON['data'][0].get('userName'),
             #     "pwd":userCredJSON['data'][0].get('password')
             # }
-            frappe.log_error("jsonnnn",json)
+            # frappe.log_error("jsonnnn",json)
             if userCredJSON['data']:
                 frappe.local.login_manager.authenticate(userCredJSON['data'][0].get('userName'), userCredJSON['data'][0].get('password'))
                 frappe.local.login_manager.post_login()
