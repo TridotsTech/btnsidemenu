@@ -24,7 +24,8 @@ def login_erp(userId):
                 if check_user:
                     from frappe.sessions import clear_sessions
                     clear_sessions(user=check_user[0].name, keep_current=True, force=True)
-                    frappe.local.login_manager.authenticate(userCredJSON['data'][0].get('userName'), userCredJSON['data'][0].get('password'))
+                    frappe.local.login_manager.user = user
+                    # frappe.local.login_manager.authenticate(userCredJSON['data'][0].get('userName'), userCredJSON['data'][0].get('password'))
                     frappe.local.login_manager.post_login()
 
             # res = requests.post(url= frappe.utils.get_url() + "/api/method/login",json=json)
