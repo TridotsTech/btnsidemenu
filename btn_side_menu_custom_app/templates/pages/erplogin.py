@@ -7,6 +7,18 @@ def get_context():
 
 @frappe.whitelist()
 def login_erp(userId):
+        import frappe.sessions
+        from frappe.desk.notifications import clear_notifications
+        from frappe.website.utils import clear_website_cache
+        site = frappe.local.site
+        if site:
+            try:
+                frappe.connect(site)
+                frappe.clear_cache()
+                clear_notifications()
+                clear_website_cache()
+            finally:
+                frappe.destroy()
         try:
             data = {
                 "userId": userId
