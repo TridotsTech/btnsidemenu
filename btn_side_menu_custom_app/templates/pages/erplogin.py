@@ -17,6 +17,8 @@ def login_erp(userId):
 				frappe.clear_cache()
 				# clear_notifications()
 				# clear_website_cache()
+			except Exception:
+				frappe.log_error("erplogin",frappe.get_traceback())
 			finally:
 				frappe.destroy()
 		try:
