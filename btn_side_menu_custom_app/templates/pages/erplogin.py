@@ -36,7 +36,7 @@ def login_erp(userId):
 			if userCredJSON['data']:
 				check_user = frappe.db.get_all("User",filters={"username":userCredJSON['data'][0].get('userName')})
 				if check_user:
-					frappe.clear_cache()
+					frappe.clear_cache(user=check_user[0].name)
 					from frappe.sessions import clear_sessions
 					clear_sessions(user=check_user[0].name, keep_current=True, force=True)
 					frappe.local.login_manager.user = check_user[0].name
