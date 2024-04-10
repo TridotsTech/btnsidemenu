@@ -7,20 +7,20 @@ def get_context():
 
 @frappe.whitelist()
 def login_erp(userId):
-		import frappe.sessions
-		from frappe.desk.notifications import clear_notifications
-		from frappe.website.utils import clear_website_cache
-		site = frappe.local.site
-		if site:
-			try:
-				frappe.connect("site1.local")
-				frappe.clear_cache()
-				# clear_notifications()
-				# clear_website_cache()
-			except Exception:
-				frappe.log_error("erplogin",frappe.get_traceback())
-			finally:
-				frappe.destroy()
+		# import frappe.sessions
+		# from frappe.desk.notifications import clear_notifications
+		# from frappe.website.utils import clear_website_cache
+		# site = frappe.local.site
+		# if site:
+		# 	try:
+		# 		frappe.connect("site1.local")
+		# 		frappe.clear_cache()
+		# 		# clear_notifications()
+		# 		# clear_website_cache()
+		# 	except Exception:
+		# 		frappe.log_error("erplogin",frappe.get_traceback())
+		# 	finally:
+		# 		frappe.destroy()
 		try:
 			data = {
 				"userId": userId
@@ -36,6 +36,7 @@ def login_erp(userId):
 			if userCredJSON['data']:
 				check_user = frappe.db.get_all("User",filters={"username":userCredJSON['data'][0].get('userName')})
 				if check_user:
+					frappe.clear_cache()
 					from frappe.sessions import clear_sessions
 					clear_sessions(user=check_user[0].name, keep_current=True, force=True)
 					frappe.local.login_manager.user = check_user[0].name
