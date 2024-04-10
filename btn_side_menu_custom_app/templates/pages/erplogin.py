@@ -13,7 +13,7 @@ def login_erp(userId):
 		site = frappe.local.site
 		if site:
 			try:
-				frappe.connect(site)
+				frappe.connect("site1.local")
 				frappe.clear_cache()
 				# clear_notifications()
 				# clear_website_cache()
