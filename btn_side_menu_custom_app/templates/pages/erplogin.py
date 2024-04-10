@@ -20,8 +20,10 @@ def login_erp(userId):
             # }
             frappe.log_error("jsonnnn",json)
             if userCredJSON['data']:
-                frappe.local.login_manager.authenticate(userCredJSON['data'][0].get('userName'), userCredJSON['data'][0].get('password'))
-                frappe.local.login_manager.post_login()
+                if frappe.db.get_all("User",{"username":userCred['data'].get('userName')}):
+                    frappe.local.login_manager.user = userCred['data'].get('userName')
+                # frappe.local.login_manager.authenticate(userCredJSON['data'][0].get('userName'), userCredJSON['data'][0].get('password'))
+                    frappe.local.login_manager.post_login()
 
             # res = requests.post(url= frappe.utils.get_url() + "/api/method/login",json=json)
             # frappe.log_error("Res",res.status_code)
