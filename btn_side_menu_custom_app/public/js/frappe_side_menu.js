@@ -1,5 +1,21 @@
-
+setTimeout(function(){
+    $('[onclick="return frappe.app.logout()"]').attr("onclick","custom_logout()")
+},1000);
+function custom_logout(){
+    frappe.call({
+        method: "btn_side_menu_custom_app.templates.pages.erplogin.erplogout",
+        args: {},
+        async: false,
+        callback: function(r) {
+            if(r.message=="Success"){
+                window.location.href="https://tasmace2euat.in:5002/Account/LogOut";
+            }
+        }
+    });
+}
 $(document).ready(function() {
+
+    
     $('[class="app-logo"]').css({
         "display": "block"
     });
