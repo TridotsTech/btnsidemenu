@@ -36,14 +36,15 @@ def login_erp(userId):
         except Exception:
             frappe.log_error("erplogin",frappe.get_traceback())
 
-import werkzeug
+# import werkzeug
 # from frappe.utils import redirect
 @frappe.whitelist(allow_guest=True)
 def erplogout():
     try:
         # frappe.session.destroy()
-        # frappe.local.login_manager.logout()
-        logOut = requests.get(url = frappe.utils.get_url()+"/api/method/logout")
+        frappe.local.login_manager.logout()
+        # logOut = requests.get(url = frappe.utils.get_url()+"/api/method/logout")
+        frappe.db.commit()
         return "Success"
     except Exception:
         frappe.log_error("erplogout",frappe.get_traceback())
