@@ -19,17 +19,9 @@ def login_erp(userId):
             #     "pwd":userCredJSON['data'][0].get('password')
             # }
             frappe.log_error("jsonnnn",json)
-
             if userCredJSON['data']:
-                login_manager = frappe.auth.LoginManager()
-                login_manager.authenticate(user=userCred['data'].get('userName'), pwd=userCredJSON['data'][0].get('password'))
-                login_manager.post_login()
-
-            # if userCredJSON['data']:
-            #     if frappe.db.get_all("User",{"username":userCred['data'].get('userName')}):
-            #         frappe.local.login_manager.user = userCred['data'].get('userName')
-            #     # frappe.local.login_manager.authenticate(userCredJSON['data'][0].get('userName'), userCredJSON['data'][0].get('password'))
-            #         frappe.local.login_manager.post_login()
+                frappe.local.login_manager.authenticate(userCredJSON['data'][0].get('userName'), userCredJSON['data'][0].get('password'))
+                frappe.local.login_manager.post_login()
 
             # res = requests.post(url= frappe.utils.get_url() + "/api/method/login",json=json)
             # frappe.log_error("Res",res.status_code)
