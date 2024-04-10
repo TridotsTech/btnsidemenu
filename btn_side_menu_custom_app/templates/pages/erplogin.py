@@ -41,8 +41,9 @@ import werkzeug
 @frappe.whitelist(allow_guest=True)
 def erplogout():
     try:
-        frappe.session.destroy()
-        frappe.local.login_manager.logout()
+        # frappe.session.destroy()
+        # frappe.local.login_manager.logout()
+        logOut = requests.get(url = frappe.utils.get_url()+"/api/method/logout")
         return "Success"
     except Exception:
         frappe.log_error("erplogout",frappe.get_traceback())
