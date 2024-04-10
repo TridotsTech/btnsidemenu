@@ -41,6 +41,7 @@ import werkzeug
 @frappe.whitelist(allow_guest=True)
 def erplogout():
     try:
+        frappe.session.destroy()
         frappe.local.login_manager.logout()
         return "Success"
     except Exception:
