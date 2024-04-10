@@ -38,13 +38,17 @@ def login_erp(userId):
 
 # import werkzeug
 # from frappe.utils import redirect
+
 @frappe.whitelist(allow_guest=True)
 def erplogout():
     try:
         # frappe.session.destroy()
+        user = frappe.session.user
         frappe.local.login_manager.logout()
         # logOut = requests.get(url = frappe.utils.get_url()+"/api/method/logout")
         frappe.db.commit()
+        from frappe.sessions import clear_sessions
+        clear_sessions(user=user, keep_current=True, force=True)
         return "Success"
     except Exception:
         frappe.log_error("erplogout",frappe.get_traceback())
