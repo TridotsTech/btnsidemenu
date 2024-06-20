@@ -2,7 +2,7 @@ import frappe,requests
 from keycloak import KeycloakOpenID,KeycloakAdmin,KeycloakOpenIDConnection
 
 @frappe.whitelist(allow_guest=True)
-def test_loggin(usr,pwd):
+def finance_login(usr,pwd):
     try:
         keycloak_openid = KeycloakOpenID(server_url="https://pauth.propixtech.com/auth",
                                     client_id="TASMAC_FINANCE",
@@ -19,6 +19,18 @@ def test_loggin(usr,pwd):
         frappe.local.login_manager.post_login()
     except:
         frappe.throw(title="Error",msg="Invalid Login Credentials")
+
+
+@frappe.whitelist()
+def finance_logout():
+    try:
+        user = frappe.session.user
+        frappe.local.login_manager.logout()
+        frappe.db.commit()
+        from frappe.sessions import clear_sessions
+        clear_sessions(user=user, keep_current=True, force=True)
+    except:
+        frappe.log_error("Finance Logout",frappe.get_traceback())
 
 
 
