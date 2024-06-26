@@ -17,9 +17,15 @@ def finance_login(usr,pwd):
         # frappe.local.login_manager.user = usr
         frappe.local.login_manager.authenticate(usr, pwd)
         frappe.local.login_manager.post_login()
+        # frappe.log_error("Data",frappe.session.sid)
+        # frappe.log_error("Respp",f"{frappe.utils.get_url()}/app?sid={frappe.session.sid}")
+        frappe.local.response["redirect_url"] = f"{frappe.utils.get_url()}/app?sid={frappe.session.sid}"
+        # frappe.local.response["type"] = "redirect"
+        # frappe.local.response["location"] = "/app"
+        # frappe.local.response["sid"] = frappe.session.id
+        # frappe.log_error("Reponse",frappe.local.response)
     except:
         frappe.throw(title="Error",msg="Invalid Login Credentials")
-
 
 @frappe.whitelist()
 def finance_logout():
