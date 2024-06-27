@@ -19,8 +19,8 @@ def finance_login(usr,pwd):
         frappe.local.login_manager.post_login()
         # frappe.log_error("Data",frappe.session.sid)
         # frappe.log_error("Respp",f"{frappe.utils.get_url()}/app?sid={frappe.session.sid}")
-        # frappe.local.response["redirect_url"] = f"{frappe.utils.get_url()}/app?sid={frappe.session.sid}"
-        frappe.local.response["redirect_url"] = f"{frappe.utils.get_url()}/app"
+        frappe.local.response["redirect_url"] = f"{frappe.utils.get_url()}/app?sid={frappe.session.sid}"
+        frappe.local.response["finance_url"] = f"{frappe.utils.get_url()}/app"
         frappe.local.response["sid"] = frappe.session.sid
         # frappe.local.response["type"] = "redirect"
         # frappe.local.response["location"] = "/app"
