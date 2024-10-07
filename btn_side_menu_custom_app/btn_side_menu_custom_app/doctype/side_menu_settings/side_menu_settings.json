@@ -1,0 +1,215 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-02 13:56:18.204434",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "select_side_menu_type",
+  "column_break_oaiz3",
+  "set_width",
+  "column_break_fs8js",
+  "column_break_j1ded",
+  "logo",
+  "application_logo",
+  "small_menu_logo",
+  "column_break_wisj",
+  "route_logo",
+  "column_break_syomw",
+  "logo_background_color",
+  "column_break_wj2v",
+  "logo_bottom_border_color",
+  "main_menu_section",
+  "side_bar_background_color",
+  "column_break_amtw",
+  "side_bar_hover_color",
+  "column_break_aycx",
+  "side_bar_text_color",
+  "column_break_valh",
+  "side_bar_text_hover_color",
+  "sub_menu_section",
+  "sub_menu_background_color",
+  "column_break_kalh",
+  "sub_menu_text_color",
+  "column_break_p627",
+  "sub_menu_background_hover_color",
+  "column_break_yxjc",
+  "sub_menu_text_hover_color"
+ ],
+ "fields": [
+  {
+   "fieldname": "select_side_menu_type",
+   "fieldtype": "Select",
+   "label": "Select Side Menu Type",
+   "options": "Side Menu\nDrill Down Menu\nSide Menu With Tab"
+  },
+  {
+   "fieldname": "column_break_oaiz3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "280",
+   "depends_on": "eval:doc.select_side_menu_type==\"Drill Down Menu\"",
+   "fieldname": "set_width",
+   "fieldtype": "Int",
+   "label": "Set width"
+  },
+  {
+   "fieldname": "column_break_fs8js",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_j1ded",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Section Break",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "application_logo",
+   "fieldtype": "Attach Image",
+   "label": "Application Logo"
+  },
+  {
+   "fieldname": "column_break_wisj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "route_logo",
+   "fieldtype": "Data",
+   "label": "Route Logo"
+  },
+  {
+   "fieldname": "column_break_syomw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "logo_background_color",
+   "fieldtype": "Color",
+   "label": "Logo Background Color"
+  },
+  {
+   "fieldname": "column_break_wj2v",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "logo_bottom_border_color",
+   "fieldtype": "Color",
+   "label": "Logo Bottom Border Color"
+  },
+  {
+   "fieldname": "main_menu_section",
+   "fieldtype": "Section Break",
+   "label": "Main Menu"
+  },
+  {
+   "default": "#005fb3",
+   "fieldname": "side_bar_background_color",
+   "fieldtype": "Color",
+   "label": "Side Bar Background Color"
+  },
+  {
+   "fieldname": "column_break_amtw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "#062541",
+   "fieldname": "side_bar_hover_color",
+   "fieldtype": "Color",
+   "label": "Side Bar Background Color-Hover"
+  },
+  {
+   "fieldname": "column_break_aycx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "#ffffff",
+   "fieldname": "side_bar_text_color",
+   "fieldtype": "Color",
+   "label": "Side Bar Text Color"
+  },
+  {
+   "fieldname": "column_break_valh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "#ffffff",
+   "fieldname": "side_bar_text_hover_color",
+   "fieldtype": "Color",
+   "label": "Side Bar Text Hover Color"
+  },
+  {
+   "fieldname": "sub_menu_section",
+   "fieldtype": "Section Break",
+   "label": "Sub Menu"
+  },
+  {
+   "default": "#ffffff",
+   "fieldname": "sub_menu_background_color",
+   "fieldtype": "Color",
+   "label": "Sub Menu Background Color"
+  },
+  {
+   "fieldname": "column_break_kalh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "#222222",
+   "fieldname": "sub_menu_text_color",
+   "fieldtype": "Color",
+   "label": "Sub Menu Text Color"
+  },
+  {
+   "fieldname": "column_break_p627",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "#062541",
+   "fieldname": "sub_menu_background_hover_color",
+   "fieldtype": "Color",
+   "label": "Sub Menu Background Hover Color"
+  },
+  {
+   "fieldname": "column_break_yxjc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "#ffffff",
+   "fieldname": "sub_menu_text_hover_color",
+   "fieldtype": "Color",
+   "label": "Sub Menu Text Hover Color"
+  },
+  {
+   "fieldname": "small_menu_logo",
+   "fieldtype": "Attach Image",
+   "label": "Small Menu Logo"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-02-05 14:58:46.618446",
+ "modified_by": "Administrator",
+ "module": "Btn Side Menu Custom App",
+ "name": "Side Menu Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

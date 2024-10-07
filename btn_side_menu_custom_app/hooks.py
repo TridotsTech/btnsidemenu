@@ -1,7 +1,9 @@
+from . import __version__ as app_version
+
 app_name = "btn_side_menu_custom_app"
 app_title = "Btn Side Menu Custom App"
-app_publisher = "info@tridotstech.com"
-app_description = "Custom Side Menu App"
+app_publisher = "tridotstech"
+app_description = "Btn Side Menu Custom App"
 app_email = "info@tridotstech.com"
 app_license = "MIT"
 
@@ -9,8 +11,10 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/btn_side_menu_custom_app/css/btn_side_menu_custom_app.css"
-# app_include_js = "/assets/btn_side_menu_custom_app/js/btn_side_menu_custom_app.js"
+app_include_css = ["https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600&display=swap","/assets/btn_side_menu_custom_app/css/frappe_side_menu.css","/assets/btn_side_menu_custom_app/css/ui-icons-regular.css"]
+app_include_js = ["/assets/btn_side_menu_custom_app/js/frappe_side_menu.js","/assets/btn_side_menu_custom_app/js/jquery.slimscroll.js"]
+
+on_session_creation  = "btn_side_menu_custom_app.btn_side_menu_custom_app.api.set_default_route"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/btn_side_menu_custom_app/css/btn_side_menu_custom_app.css"
@@ -40,7 +44,7 @@ app_license = "MIT"
 
 # website user home page (by Role)
 # role_home_page = {
-# 	"Role": "home_page"
+#	"Role": "home_page"
 # }
 
 # Generators
@@ -54,8 +58,8 @@ app_license = "MIT"
 
 # add methods and filters to jinja environment
 # jinja = {
-# 	"methods": "btn_side_menu_custom_app.utils.jinja_methods",
-# 	"filters": "btn_side_menu_custom_app.utils.jinja_filters"
+#	"methods": "btn_side_menu_custom_app.utils.jinja_methods",
+#	"filters": "btn_side_menu_custom_app.utils.jinja_filters"
 # }
 
 # Installation
@@ -70,22 +74,6 @@ app_license = "MIT"
 # before_uninstall = "btn_side_menu_custom_app.uninstall.before_uninstall"
 # after_uninstall = "btn_side_menu_custom_app.uninstall.after_uninstall"
 
-# Integration Setup
-# ------------------
-# To set up dependencies/integrations with other apps
-# Name of the app being installed is passed as an argument
-
-# before_app_install = "btn_side_menu_custom_app.utils.before_app_install"
-# after_app_install = "btn_side_menu_custom_app.utils.after_app_install"
-
-# Integration Cleanup
-# -------------------
-# To clean up dependencies/integrations with other apps
-# Name of the app being uninstalled is passed as an argument
-
-# before_app_uninstall = "btn_side_menu_custom_app.utils.before_app_uninstall"
-# after_app_uninstall = "btn_side_menu_custom_app.utils.after_app_uninstall"
-
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
@@ -97,11 +85,11 @@ app_license = "MIT"
 # Permissions evaluated in scripted ways
 
 # permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+#	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
 #
 # has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
+#	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
 # DocType Class
@@ -109,7 +97,7 @@ app_license = "MIT"
 # Override standard doctype classes
 
 # override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
+#	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
 # Document Events
@@ -117,32 +105,32 @@ app_license = "MIT"
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
+#	"*": {
+#		"on_update": "method",
+#		"on_cancel": "method",
+#		"on_trash": "method"
+#	}
 # }
 
 # Scheduled Tasks
 # ---------------
 
 # scheduler_events = {
-# 	"all": [
-# 		"btn_side_menu_custom_app.tasks.all"
-# 	],
-# 	"daily": [
-# 		"btn_side_menu_custom_app.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"btn_side_menu_custom_app.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"btn_side_menu_custom_app.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"btn_side_menu_custom_app.tasks.monthly"
-# 	],
+#	"all": [
+#		"btn_side_menu_custom_app.tasks.all"
+#	],
+#	"daily": [
+#		"btn_side_menu_custom_app.tasks.daily"
+#	],
+#	"hourly": [
+#		"btn_side_menu_custom_app.tasks.hourly"
+#	],
+#	"weekly": [
+#		"btn_side_menu_custom_app.tasks.weekly"
+#	],
+#	"monthly": [
+#		"btn_side_menu_custom_app.tasks.monthly"
+#	],
 # }
 
 # Testing
@@ -154,14 +142,14 @@ app_license = "MIT"
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "btn_side_menu_custom_app.event.get_events"
+#	"frappe.desk.doctype.event.event.get_events": "btn_side_menu_custom_app.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "btn_side_menu_custom_app.task.get_dashboard_data"
+#	"Task": "btn_side_menu_custom_app.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -187,29 +175,30 @@ app_license = "MIT"
 # --------------------
 
 # user_data_fields = [
-# 	{
-# 		"doctype": "{doctype_1}",
-# 		"filter_by": "{filter_by}",
-# 		"redact_fields": ["{field_1}", "{field_2}"],
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_2}",
-# 		"filter_by": "{filter_by}",
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_3}",
-# 		"strict": False,
-# 	},
-# 	{
-# 		"doctype": "{doctype_4}"
-# 	}
+#	{
+#		"doctype": "{doctype_1}",
+#		"filter_by": "{filter_by}",
+#		"redact_fields": ["{field_1}", "{field_2}"],
+#		"partial": 1,
+#	},
+#	{
+#		"doctype": "{doctype_2}",
+#		"filter_by": "{filter_by}",
+#		"partial": 1,
+#	},
+#	{
+#		"doctype": "{doctype_3}",
+#		"strict": False,
+#	},
+#	{
+#		"doctype": "{doctype_4}"
+#	}
 # ]
 
 # Authentication and authorization
 # --------------------------------
 
 # auth_hooks = [
-# 	"btn_side_menu_custom_app.auth.validate"
+#	"btn_side_menu_custom_app.auth.validate"
 # ]
+

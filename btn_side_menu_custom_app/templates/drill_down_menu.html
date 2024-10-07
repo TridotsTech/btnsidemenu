@@ -1,0 +1,951 @@
+<div class="page-content"  style="width: {% if side_menu_type == 'Side Menu' %}80px{% else %}195px{% endif %};">
+
+    <aside class="main-sidebar" style="z-index: 1040;">
+        <section class="sidebar">   
+
+            <ul class="vertical-nav" style="width:70px !important;">
+                <li class="app-logo">
+                    <a onclick="gotodashboard()" class="logo" style="max-width: 100% !important;">
+                        {% if side_menu_settings.application_logo %}
+                            <img class="app-logo-image" id="app-logo" src="{{ side_menu_settings.application_logo }}" >
+                        {% else %}
+                            <img src="" alt="no-logo" style="height: 43px;">
+                        {% endif %}
+                        {% if side_menu_settings.small_menu_logo %}
+                            <img src="{{side_menu_settings.small_menu_logo}}" class="small_menu_logo">
+                        {% endif %}
+                    </a>
+                </li>
+            
+                {% set grouped_menu_items = {} %}
+                {% for u in menulist %}
+                    {% if u.menu_group not in grouped_menu_items %}
+                        {% set _ = grouped_menu_items.update({u.menu_group: []}) %}
+                    {% endif %}
+                    {% set _ = grouped_menu_items[u.menu_group].append(u) %}
+                {% endfor %}
+            
+                {% for menu_group, items in grouped_menu_items.items() %}
+                    <li class="menu-group {% if loop.index == 1 %}mar-60{% endif %}">
+                        {% if menu_group %}
+                            <p class="menu-group-small">...</p>
+                        {% endif %}
+                        {% for u in items %}
+                            <li class="treeview drop-down">
+                                <a class="menu" {% if not u.submenu %}href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"{% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;">
+                                    <span class="span" style="font-size: 15px;">
+                                        {% if u.icon_image %}
+                                            <img src="{{ u.icon_image }}" class="image-icon" style="padding: 0px; height: 18px;margin-right: 10px;">
+                                        {% elif u.menu_icon %}
+                                            <i class="{{ u.menu_icon }} navbar-icon"></i>
+                                        {% else %}
+                                            <i class="fa fa-bar-chart navbar-icon"></i>
+                                        {% endif %}
+                                        <p class='menu-label'>{{ u.label }}</p>
+                                        <i class="fa fa-angle-right" aria-hidden="true" style="float: right; font-size: 18px;margin-right: 0;width: auto;"></i>
+                                    </span>
+                                </a>
+                                {% if u.submenu is not none %}
+                                <ul class="sub-menu">
+                                    {% if user_info %}
+                                        <!-- <li class="user-info">
+                                            <div class="uname">{{ user_info.full_name }}</div>
+                                            <div class="email">{{ user_info.email }}</div>
+                                        </li> -->
+                                    {% endif %}
+                                    {% for k in u.submenu %}
+                                        {% if k.sub_menu_list %}
+                                            <li class="treeview-head">
+                                                <div>{{ k.sub_menu_title }}</div>
+                                            </li>
+                                            {% for z in k.sub_menu_list %}
+                                                    {% if z %}
+                                                        {% if z.is_static_link == 0 %}
+                                                            {% if z.sub_menu_type == "Page" %}
+                                                                <li>
+                                                                    <a class="submenu-link" id="/app/{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "DocType" %}
+                                                                {% if z.is_single == 0 %}
+                                                                    <li>
+                                                                        <a class="submenu-link" id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <li>
+                                                                        <a class="submenu-link" id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% elif z.sub_menu_type == "Report" %}
+                                                                <li>
+                                                                    <a class="submenu-link" id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "Dashboard" %}
+                                                                <li>
+                                                                    <a class="submenu-link" id="/app/dashboard-view/{{ z.sub_menu_doc }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            
+                                                        {% else %}
+                                                            <li>
+                                                                <a class="submenu-link" href="/app/{{ z.static_link }}">
+                                                                    {% if z.sub_menu_image_icon %}
+                                                                        <img src="{{ z.sub_menu_image_icon }}" style="width: 22px;">
+                                                                    {% else %}
+                                                                        <b class="pointer">-</b>
+                                                                        {% if center_menu == 1 %}<br />{% endif %}
+                                                                    {% endif %}
+                                                                    <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                <!-- {% if u.menu_type == "DocType" and u.is_single_doc == 0 %}
+                                    <li>
+                                        <a class="menu treeview drop-down" id="/app/{{ u.route }}" onclick="go_to_page(this)" style="display: flex;">                         
+                                            <i class="{% if u.menu_icon %}{{ u.menu_icon }}{% else %}fa fa-address-card{% endif %} navbar-icon"></i>{% if center_menu == 1 %}<br> {% endif %} 
+                                        </a>
+                                    </li>
+                                {% endif %} -->
+                            </li>
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+                <!-- </div> -->
+            </ul>
+            
+            
+
+            {% if side_menu_settings.set_width %}
+            {% endif %}
+            <ul class="sidebar-menu" style="padding: 0; width: {{ side_menu_settings.set_width }}px !important; margin-top: 0 !important;">
+                <li class="app-logo">
+                    <a onclick="gotodashboard()" class="logo" style="max-width: 100% !important;">
+                        {% if side_menu_settings.application_logo %}
+                            <img class="app-logo-image" id="app-logo" src="{{ side_menu_settings.application_logo }}" >
+                        {% else %}
+                            <img src="" alt="no-logo" style="height: 43px;">
+                        {% endif %}
+                        {% if side_menu_settings.small_menu_logo %}
+                            <img src="{{side_menu_settings.small_menu_logo}}" class="small_menu_logo">
+                        {% endif %}
+                    </a>
+                    <button onclick="hidemenu(this)" class="cancel-button bttn">x</button>
+                </li>
+            
+                {% set grouped_menu_items = {} %}
+                {% for u in menulist %}
+                    {% if u.menu_group not in grouped_menu_items %}
+                        {% set _ = grouped_menu_items.update({u.menu_group: []}) %}
+                    {% endif %}
+                    {% set _ = grouped_menu_items[u.menu_group].append(u) %}
+                {% endfor %}
+            
+                {% for menu_group, items in grouped_menu_items.items() %}
+                    <li class="menu-group {%if loop.index==1%}mar-60{%endif%}">
+                        <p class="menu-group menu-group-big">{{ menu_group }}</p>
+                        <p class="menu-group menu-group-small" >...</p>
+                        {% for u in items %}
+                        <li class="treeview drop-down"> 
+                            <a class="menu" {% if not u.submenu %}
+                                {% if u.menutype == "Dashboard" %}
+                                    href="/app/dashboard-view/{{ u.menu_doc | lower | replace(' ', '-') }}"
+                                {% elif u.menutype == "Report" %}
+                                    href="/app/query-report/{{ u.menu_doc }}"
+                                {% else %}
+                                    href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"
+                                {% endif %}
+                            {% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;">
+                                <span class="span" style="font-size: 15px;">
+                                    {% if u.icon_image %}
+                                        <img src="{{ u.icon_image }}" class="image-icon" style="padding: 0px; height: 18px; margin-right: 10px;">
+                                    {% elif u.menu_icon %}
+                                        <i class="{{ u.menu_icon }} navbar-icon"></i>
+                                    {% else %}
+                                        <i class="fa fa-bar-chart navbar-icon"></i>
+                                    {% endif %}
+                                    <p class="menu-label">{{ u.label }}</p>
+                                    {% if u.has_sub_menu %}
+                                        <i class="fa fa-angle-right" aria-hidden="true" style="float: right; font-size: 18px; margin-right: 0; width: auto;"></i>
+                                    {% endif %}
+                                </span>
+                            </a>
+
+                            {% if u.submenu is not none %}
+                                    <ul class="submenu">
+                                        {% for k in u.submenu %}
+                                            {% if k.sub_menu_list %}
+                                                <li class="treeview-head">
+                                                    <div>{{ k.sub_menu_title }}</div>
+                                                </li>
+                                                {% for z in k.sub_menu_list %}
+                                                    {% if z %}
+                                                        {% if z.is_static_link == 0 %}
+                                                            {% if z.sub_menu_type == "Page" %}
+                                                                <li>
+                                                                    <a id="/app/{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "DocType" %}
+                                                                {% if z.is_single == 0 %}
+                                                                    <li>
+                                                                        <a id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% else %}
+                                                                    <li>
+                                                                        <a id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                            {% if z.sub_menu_image_icon %}
+                                                                                <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                            {% else %}
+                                                                                <b class="pointer">-</b>
+                                                                                {% if center_menu == 1 %}<br />{% endif %}
+                                                                            {% endif %}
+                                                                            <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% elif z.sub_menu_type == "Report" %}
+                                                                <li>
+                                                                    <a id="{{ z.route }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% elif z.sub_menu_type == "Dashboard" %}
+                                                                <li>
+                                                                    <a id="/app/dashboard-view/{{ z.sub_menu_doc }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            
+                                                        {% else %}
+                                                            <li>
+                                                                <a href="/app/{{ z.static_link }}">
+                                                                    {% if z.sub_menu_image_icon %}
+                                                                        <img src="{{ z.sub_menu_image_icon }}" style="width: 22px;">
+                                                                    {% else %}
+                                                                        <b class="pointer">-</b>
+                                                                        {% if center_menu == 1 %}<br />{% endif %}
+                                                                    {% endif %}
+                                                                    <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+                <!-- </div> -->
+            </ul>
+            
+            
+            
+
+            <script>
+                $('body').addClass("sidebar-big-menu");
+                // $(".sidebar-big-menu .sidebar-menu").slimscroll({
+                //   height: 'calc(100vh - 60px)'
+                // });
+                let activeSubMenu = null; 
+
+                function toggleSubMenu(element) {
+                    const parentListItem = element.parentNode;
+                    const submenu = parentListItem.querySelector(".submenu");
+
+                    if (!submenu) {
+                        console.error("Submenu not found.");
+                        return;
+                    }
+
+                    const menuLabel = parentListItem.querySelector(".menu-label");
+                    const navbarIcon = parentListItem.querySelector(".navbar-icon");
+                    const allMenuLabels = document.querySelectorAll(".menu-label");
+                    const allNavbarIcons = document.querySelectorAll(".navbar-icon");
+
+                    allMenuLabels.forEach(label => {
+                        label.style.color = "{{side_menu_settings.side_bar_text_color}}";
+                    });
+
+                    allNavbarIcons.forEach(icon => {
+                        icon.style.color = "{{side_menu_settings.side_bar_text_color}}";
+                    });
+
+                    if (activeSubMenu && activeSubMenu !== submenu) {
+                        activeSubMenu.style.maxHeight = "0";
+                        const activeMenuIcon = activeSubMenu.previousElementSibling.querySelector("i.fa-angle-down");
+                        if (activeMenuIcon) {
+                            activeMenuIcon.classList.replace("fa-angle-down", "fa-angle-right");
+                        }
+                        activeSubMenu.previousElementSibling.style.backgroundColor = "{{ side_menu_settings.side_bar_background_color }}";
+                    }
+
+                    const isSubMenuOpen = submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "";
+                    if (isSubMenuOpen) {
+                        submenu.style.maxHeight = "100vh";
+                        element.querySelector("i.fa-angle-right").classList.replace("fa-angle-right", "fa-angle-down");
+                        element.style.backgroundColor = "{{ side_menu_settings.side_bar_hover_color }}";
+                        menuLabel.style.color = "{{side_menu_settings.side_bar_text_hover_color}}";
+                        navbarIcon.style.color = "{{side_menu_settings.side_bar_text_hover_color}}";
+                        console.log(menuLabel.style.color)
+                        activeSubMenu = submenu;
+                    } else {
+                        submenu.style.maxHeight = "0px";
+                        element.querySelector("i.fa-angle-down").classList.replace("fa-angle-down", "fa-angle-right");
+                        element.style.backgroundColor = "{{ side_menu_settings.side_bar_background_color }}";
+                        menuLabel.style.color = "{{side_menu_settings.side_bar_text_color}}";
+                        activeSubMenu = null;
+                    }
+                }
+
+
+            var isMenuExpanded = false;
+
+            var navbarHomeElements = document.querySelectorAll('.navbar-brand.navbar-home');
+
+            navbarHomeElements.forEach(function(element) {
+                var button = document.createElement('button');
+                button.className = 'btn btn-icon menu-btn';
+                var icon = document.createElement('i');
+                icon.className = 'fa fi-rr-menu-burger';
+                button.appendChild(icon);
+                element.parentNode.insertBefore(button, element.nextSibling);
+                button.addEventListener('click', function() {
+                    var sidebarMenu = document.querySelector('.sidebar-menu');
+                    var contents = document.querySelector('.col.layout-main-section-wrapper');
+                    if (sidebarMenu) {
+                        if ($(window).width() > 768) {
+                            if (sidebarMenu.style.width === '70px') {
+                                $('.menu-label').css("display", "contents");
+                                $('.col .layout-main-section-wrapper').css("margin-left", "249px");
+                                $('.fa-angle-right').css("display", "block");
+                                $('.sidebar-menu').css("width", "249px");
+                                $('.sidebar-menu').removeClass("small-menu");
+                                $('body').removeClass("sidebar-small-menu");
+                                $('body').addClass("sidebar-big-menu");
+                                $('.sidebar-menu').css("height", "100vh");
+                                $('.vertical-nav').css("display", "none");
+                                $('.sidebar-menu').css("display", "block");
+            
+                            } else {
+            
+                                $('.menu-label').css("display", "none");
+                                $('.col .layout-main-section-wrapper').css("margin-left", "0");
+                                $('.fa-angle-right').css("display", "none");
+                                $('.sidebar-menu').css("width", "70px");
+                                $('.sidebar-menu').addClass("small-menu");
+                                $('body').addClass("sidebar-small-menu");
+                                $('body').removeClass("sidebar-big-menu");
+                                $('.sidebar-menu').css("height", $(document).height()+"px");
+                                $('.sidebar-menu').css("position", "absolute");
+                                $('.vertical-nav').css("display", "block");
+                                $('.sidebar-menu').css("display", "none");
+                                $('.vertical-nav').css("height", $(document).height()+"px");
+                            }
+                        }
+                        else{
+                            $('.menu-label').css("display", "contents");
+                            $('.col .layout-main-section-wrapper').css("margin-left", "249px");
+                            $('.fa-angle-right').css("display", "block");
+                            $('.sidebar-menu').css("width", "249px");
+                            $('.sidebar-menu').removeClass("small-menu");
+                            $('body').removeClass("sidebar-small-menu");
+                            $('body').addClass("sidebar-big-menu");
+                            $('.sidebar-menu').css("height", "100vh");
+                            $('.vertical-nav').css("display", "none");
+                            $('.sidebar-menu').css("display", "block");
+                        }
+                    }
+                });
+            });
+            function hidemenu() {
+                if ($(window).width() < 768) {
+                    $('.sidebar-big-menu .sidebar-menu').css("display", "none");
+                }
+            }
+            if ($(window).width() < 768) {
+                function go_to_page(event, element) {
+                    event.preventDefault(); 
+                    var route = element.getAttribute('id');
+                    console.log("check route",route)
+                    if (route) {
+                        window.location.href = '/app/' + route;
+                    }
+                }
+                document.querySelectorAll('.routeLink').forEach(function(element) {
+                    element.addEventListener('click', function(event) {
+                            go_to_page(event, element);
+                    
+                    });
+                });
+            }
+
+        </script>
+
+            <style>
+                .app-logo {
+                    position: relative; 
+                    display: flex; 
+                    align-items: center; 
+                }
+
+                .cancel-button {
+                    position: absolute; 
+                    top: 0; 
+                    right: 0; 
+                    margin: 3px 6px 7px 8px; 
+                    background-color: transparent; 
+                    border: none; 
+                    cursor: pointer; 
+                    font-size: 16px; 
+                    color: #ffffff; 
+                    font-weight: 700
+                }
+
+                   @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans&family=Manrope&family=Poppins:ital@1&display=swap');
+                .col.layout-main-section-wrapper, 
+                .col-md-4.col-sm-6.col-xs-8.page-title,
+                .navbar .navbar-brand, .btn-icon,
+                .col-md-12.layout-main-section-wrapper {
+                    transition: .1s;
+                    margin-left: {{ side_menu_settings.set_width }}px !important;
+                }
+                .main-section .navbar.navbar-expand.sticky-top .container #navbar-breadcrumbs{
+                    margin-left:10px !important;
+                }
+                /* .container {
+                    margin-left: {{ side_menu_settings.set_width }}px !important;
+                } */
+                .main-sidebar .sidebar-menu {
+                transition:.1s;
+                background: #267db9 !important;
+                font-family: 'Poppins', sans-serif;
+                padding: 0;
+                margin-top: 0 !important;
+                left: 0 !important;
+                z-index: 999999;
+            }
+            .submenu-link{
+                margin-left: 9px;
+            }
+            .submenu-lable{
+                text-wrap: wrap;
+
+            }
+            .submenu{
+                background-color: {{side_menu_settings.sub_menu_background_color}};
+                color: {{side_menu_settings.submenu_text_color}};
+            }
+            .submenu:hover{
+                background-color: {{side_menu_settings.sub_menu_background_color}};
+                color: {{ side_menu_settings.sub_menu_text_hover_color }};
+            }
+            ul.submenu li:hover {
+                background-color: {{ side_menu_settings.sub_menu_background_hover_color }};
+            }
+            ul.submenu li {
+                padding: 0;list-style: none;
+            }
+            .main-sidebar .sidebar-menu li>a:hover{
+                color: {{side_menu_settings.sub_menu_text_hover_color}};
+            }
+            .main-sidebar .sidebar-menu > li > a span{
+                font-size: 13px;
+            }
+            ul.submenu {
+                padding-left: 0 !important;
+            }
+          
+            .image-icon{
+                padding: 0;
+                font-size: 20px;
+                margin-left: 0px;
+            }
+            /* .sidebar-menu ::-webkit-scrollbar-thumb{
+                border-radius: 10px;
+
+            } */
+            .sidebar-menu{
+                scrollbar-width: none !important;
+                scrollbar-color: var(--scrollbar-thumb-color){{side_menu_settings.side_bar_background_color}};
+            }
+            .sidebar-menu:hover{
+                scrollbar-width: thin !important;
+                scrollbar-color: var(--scrollbar-thumb-color){{side_menu_settings.side_bar_background_color}};
+            }
+
+            .small-menu .treeview .submenu{
+                max-height: 100% !important;
+                margin-left: 0 !important;
+                line-height: 40px;
+                display: none;
+                position: absolute;
+                margin-top: -50px !important;
+                box-shadow: 0 1px 2px {{side_menu_settings.side_bar_hover_color}};
+            }
+            /* .btn .btn-icon{
+                margin-left: 194px;
+            } */
+            .sidebar-menu {
+                margin-bottom: 0px !important;
+                height: 100%;
+                /* scrollbar-width: auto; */
+                position: fixed;    
+                width: 280px;
+                background: #f0f0f0;
+                overflow-y: auto;
+                transition: .1s !important;
+            }
+        
+            .menu {
+                text-decoration: none;
+                display: block;
+                padding: 10px;
+                /* border-bottom: 1px solid #ccc; */
+                color: #333;
+                transition: background-color 0.3s;
+            }
+        
+        
+            .treeview.drop-down .submenu {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+            }
+            .treeview-head:hover{
+                background-color: none !important;
+            }
+            .treeview.active .submenu {
+                max-height: 1000px;
+            }
+            .widget-group .grid-col-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                -moz-column-gap: 15px;
+                width: 93%;
+                column-gap: 15px;
+                row-gap: 15px;
+                align-items: center;
+                margin-left: 7%;
+            }
+            .menu-group {
+                /* / padding: 26px 0px 13px 19px !important; / */
+                font-size: 11px;
+                font-weight: 600;
+                padding: 5px 15px;
+                font-family: 'Poppins', sans-serif;
+                color:{{side_menu_settings.sub_menu_text_color}} !important;
+                
+                margin-bottom: 0;
+                margin-top: 10px;
+            }
+            .app-logo .logo{
+
+                {% if side_menu_settings.logo_background_color %}
+                    background:{{side_menu_settings.logo_background_color}};
+                {% endif %}
+                {% if side_menu_settings.logo_bottom_border_color %}
+                    border-bottom:1px solid {{side_menu_settings.logo_bottom_border_color}};
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu,.main-sidebar .vertical-nav{
+                overflow-y: scroll !important;
+                /* scrollbar-width: none !important; */
+                {% if side_menu_settings.side_bar_background_color %}
+                    background:{{side_menu_settings.side_bar_background_color}} !important;
+                {% endif %}
+            }
+           .vertical-nav li {
+                height: 60px;
+                margin: 0;
+                padding: 5px 0;
+                {% if side_menu_settings.side_bar_background_color %}
+                background:{{side_menu_settings.side_bar_background_color}} !important;
+                {% endif %}
+                border: none;
+                text-align: center;
+                display: inline-block;
+                float: left;
+                clear:both;
+                width: 70px; 
+                padding: 10px 0 15px 0 !important;
+            }
+             .vertical-nav li ul li{
+                padding:;5px 0 10px 0 !important;
+             }
+            .vertical-nav .sub-menu li{
+                height: 46px;
+                margin: 0;
+                overflow: hidden;
+                /* padding: 5px 0; */
+                {% if side_menu_settings.side_bar_background_color %}
+                background:{{side_menu_settings.side_bar_background_color}} !important;
+                {% endif %}
+                border: none;
+                padding: 7px 5px 3px 4px;
+                display: inline-block;
+                float: left;
+                clear: both;
+                width: 70px;
+            }
+            .sub-menu li {
+                text-align: left;
+            }
+            .vertical-nav li.menu-group{
+                height:30px;
+                /* display: contents; */
+            }
+            .main-sidebar .sidebar-menu::-webkit-scrollbar{
+                display: none;
+            }
+            .main-sidebar .vertical-nav{
+                overflow-y: unset !important;
+            }
+            .main-sidebar .sidebar-menu>li:not(.app-logo):hover>a,.user-info{
+                {% if side_menu_settings.side_bar_hover_color %}
+                    background-color:{{side_menu_settings.side_bar_hover_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu>li>a{
+                padding: 15px 0px 15px 23px !important;
+                {% if side_menu_settings.side_bar_text_color %}
+                    color:{{side_menu_settings.side_bar_text_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu>li:hover>a{
+                {% if side_menu_settings.side_bar_text_hover_color %}
+                    color:{{side_menu_settings.side_bar_text_hover_color}} !important;
+                {% endif %}
+            }
+            
+
+            .main-sidebar .treeview-menu{
+                {% if side_menu_settings.sub_menu_background_color %}
+                    background:{{side_menu_settings.sub_menu_background_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .treeview-menu>li:hover>a{
+                transition: .1s;
+                {% if side_menu_settings.sub_menu_background_hover_color %}
+                    background-color:{{side_menu_settings.sub_menu_background_hover_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .treeview-menu>li>a{
+                {% if side_menu_settings.sub_menu_text_color %}
+                    color:{{side_menu_settings.sub_menu_text_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu li>a{
+                {% if side_menu_settings.sub_menu_text_color %}
+                    color:{{side_menu_settings.sub_menu_text_color}} !important;
+                {% endif %}
+            }
+
+            .main-sidebar .treeview-menu>li:hover>a{
+                {% if side_menu_settings.sub_menu_text_hover_color %}
+                    color:{{side_menu_settings.sub_menu_text_hover_color}} !important;
+                {% endif %}
+            }
+
+            .treeview-menu .user-info {
+                    padding: 9.5px !important;
+                }
+                .app-logo a{
+                        {% if side_menu_settings.logo_background_color %}
+                    background-color: {{side_menu_settings.logo_background_color}};
+                    {%else%}
+                    background-color: #fff;
+                    {%endif%}
+                }
+                    .app-logo a:hover,.app-logo:hover a{
+                        {% if side_menu_settings.logo_background_color %}
+                    background-color: {{side_menu_settings.logo_background_color}};
+                    {%else%}
+                    background-color: #fff;
+                    {%endif%}
+                    }
+                    .sidebar-big-menu li.app-logo{
+                        transition: .1s,
+                        display: block;
+                        width: 100% !important;
+                        overflow: hidden;
+                        /* z-index: 100; */
+                        position: sticky;
+                        top: 0;
+                        border: none !important;
+                        width: 96px;
+                        {% if side_menu_settings.logo_background_color %}
+                        background-color: {{side_menu_settings.logo_background_color}};
+                        {%else%}
+                        background-color: #fff;
+                        {%endif%}
+                    }
+                .sidebar-small-menu .col.layout-main-section-wrapper,
+                .sidebar-small-menu .col-md-4.col-sm-6.col-xs-8.page-title,
+                .sidebar-small-menu .navbar .navbar-brand,
+                .sidebar-small-menu .btn-icon,
+                .sidebar-small-menu .col-md-12.layout-main-section-wrapper{
+                    transition: .1s;
+                    margin-left: 0px !important;
+                }
+                .sidebar-big-menu li.app-logo{
+                    border: none !important;
+                    transition: .1s;
+                    position: fixed !important;
+                    width: {{ side_menu_settings.set_width }}px !important;
+                    height: 60px;
+                }
+                .sidebar-menu .app-logo{
+                    border: none !important;
+                }
+                .sidebar-small-menu li.app-logo{
+                    position: fixed !important;
+                    width: 70px !important;
+                    height: 60px;
+                }
+                
+                .sidebar-small-menu .mar-60{
+                    margin-top:30px !important;
+                }
+                img#app-logo{
+                    height: 45px;
+                    padding: 10px 50px;
+                    margin-top: 10px;
+                }
+                .small_menu_logo,.app-logo-image{
+                    display: none;
+
+                }
+                .sidebar-big-menu .app-logo-image{
+                    display: block;
+                }
+                .sidebar-small-menu .small_menu_logo{
+                    display: block;
+                }
+                .sidebar-big-menu .main-sidebar .sidebar-menu{
+                    position: fixed !important;
+                    top:60px !important;
+                    overflow-y: auto !important;
+                    height: calc(100vh - 60px) !important;
+                   
+                }
+                .sidebar-small-menu .main-sidebar .sidebar-menu{
+                    height: 100vh;
+                    scrollbar-width: none !important;
+                }
+                .submenu li:last-child{
+                    margin-bottom: 0 !important;
+                }
+                .sidebar-small-menu .navbar-icon{margin-left: unset;}
+                .sidebar-big-menu .sidebar-menu>li>a{padding:.625rem 1.5rem !important; }
+                .submenu li a:hover{
+                    color: {{side_menu_settings.side_bar_text_hover_color}} !important;
+                }
+                .vertical-nav .sub-menu li a {
+                    width: 100%;
+                    margin-left: 6px !important;
+                    display: flex;
+                    padding: 1px 0px 6px 10px;
+                    float: left !important;
+                    gap: 10px;
+                }
+                .sidebar-big-menu .main-sidebar .sidebar-menu > li > a span{
+                    text-align: left !important;
+                }
+                .sidebar-small-menu .main-sidebar .sidebar-menu > li > a span{
+                    text-align: center !important;
+                }
+                .sidebar-small-menu li.treeview.drop-down i.fa{
+                float: none !important;
+                margin-right: 0;
+                }
+                .sidebar-small-menu .image-icon{
+                    margin-right: 0 !important;
+                }
+                .sidebar-small-menu li.app-logo{
+                    box-shadow: 0 1px 2px {{side_menu_settings.side_bar_hover_color}};
+                }
+               .sidebar-small-menu i.fa.fa-angle-down{
+                display: none !important;
+               }
+               .sidebar-big-menu li.treeview.drop-down i.fa{
+                float: left;
+                /* width: 27px; */
+                margin-right: 5px;
+                margin-left: 1px;
+               }
+               
+               .vertical-nav li a {
+                    font-size:14px;
+                    color:{{side_menu_settings.sub_menu_text_color}} !important;
+                }
+                .sidebar-big-menu .vertical-nav li a:hover{
+                    background-color:{{side_menu_settings.side_bar_hover_color}} !important;
+                }
+                .sidebar-small-menu .treeview:hover{
+                    background-color:{{side_menu_settings.side_bar_hover_color}} !important;
+                }
+
+                .vertical-nav ul li:hover .sub-menu{
+                    position: relative;   
+                    margin-top: -27.5px;
+                    box-shadow: 0 1px 2px {{side_menu_settings.side_bar_hover_color}};
+                }
+           
+               .slimScrollDiv {
+                    float: left;width: 249px !important;
+                }
+                /* .vertical-nav ul li.treeview.drop-down:hover {
+                    background-color:{{side_menu_settings.side_bar_hover_color}} !important;
+                }  */
+                .menu-group:hover {
+                    background-color: none !important;
+                }
+
+                .vertical-nav ul li:hover ul li {
+                    width:125px;
+                    height:30px;
+                    display:inline-block;
+                }
+                .vertical-nav .sub-menu li a:hover {
+                    color:{{side_menu_settings.side_bar_text_hover_color}} !important;
+                }
+                /* .clearfix{
+                    display: none;
+                } */
+                .vertical-nav .sub-menu li{
+                    padding:5px 10px !important;height:auto;width: 230px;
+                }
+                .sidebar-small-menu .sidebar-menu{
+                    transition:.1s !important;
+                }
+                .sidebar-big-menu .sidebar-menu{
+                    transition:.1s !important;
+                }
+
+                .vertical-nav .sub-menu li.treeview-head{
+                    padding:10px !important;font-size: 15px !important;
+                    font-weight: 600;
+                }
+                  .vertical-nav .sub-menu
+                {
+                     box-shadow: inset -1px 0 0px 0px {{side_menu_settings.side_bar_hover_color}};
+                }
+                /* li.treeview.drop-down:hover{
+                    background-color: {{side_menu_settings.side_bar_hover_color}} !important;
+                } */
+                .clearfix {
+                    display: flex;
+                }
+                .sidebar-small-menu .sub-menu{
+                    box-shadow: 0 1px 2px {{side_menu_settings.side_bar_hover_color}};
+                }
+
+
+                .menu{
+                    transition: .1s;
+                } 
+                .cancel-button{
+                    display: none;
+                }
+                @media only screen and (max-width: 768px) {
+                    .cancel-button{
+                        display: block !important;
+                    }
+                    .vertical-nav {
+                        display: none !important; 
+                    }
+                    .sidebar-menu{
+                        display: none; 
+                    }
+
+                    .sidebar-big-menu .col.layout-main-section-wrapper,
+                    .sidebar-big-menu .col-md-4.col-sm-6.col-xs-8.page-title,
+                    .sidebar-big-menu .navbar .navbar-brand, .btn-icon,
+                    .sidebar-big-menu .col-md-12.layout-main-section-wrapper{
+                        margin-left: 0 !important;
+                    }
+                }
+            </style>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+</div>

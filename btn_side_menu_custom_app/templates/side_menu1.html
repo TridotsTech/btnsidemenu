@@ -1,0 +1,257 @@
+<aside class="main-sidebar" style="z-index: 1040;">
+    <section class="sidebar">   
+        <ul class="sidebar-menu"  style="margin-bottom: 0px !important; left: -40px !important; height: 100%; position: fixed;min-width: 95px !important;">
+            <li class="app-logo" style=" display: block; width: 100% !important; overflow: hidden; z-index: 100; position: sticky; top: 0;">
+                <a onclick="gotodashboard()" class="logo" style="width: 95px;"> 
+                    {% if side_menu_settings.application_logo %}
+                        <img src="{{side_menu_settings.application_logo}}" style="height:43px;">
+                    {% else %}
+                        <img src="" alt="no-logo" style="height:43px;"> 
+                    {% endif %}
+                </a>
+            </li>
+            {%for u in menulist%}
+               {% if u.has_sub_menu==1 and u.has_sublist >= 1%}
+                  <li class="treeview drop-down">
+                        <a class="link menu" style="border-left-color: #fff !important; ">
+                            <i class="{%if u.menu_icon%}{{u.menu_icon}}{%else%}fa fa-bar-chart{%endif%} navbar-icon"></i> {% if center_menu==1 %}<br /> {% endif %}
+                            <span style="font-size: 15px;">{{u.label}}</span>
+                            
+                        </a>
+                        <div class="side-menu">
+                        <ul class="treeview-menu" id="submenu-tree" style="height: 850px !important;">
+                    
+                            {% if user_info %}
+                            <li class="user-info">
+                                <div class="uname">{{user_info.full_name}}</div>
+                                <div class="email">{{user_info.email}}</div>
+                            </li>
+                            {% endif %}
+                            {%for k in u.submenu%}
+                            <li class="treeview-head">
+                                <div>{{k.sub_menu_title}}</div>
+                            </li>
+                        
+                            {%  for z in k.sub_menu_list %}
+                            {% if z.is_static_link==0%}
+                            {%if z.sub_menu_type=="Page"%}
+                            
+                            <li>
+                                <a id="/app/{{z.route}}" onclick="go_to_page(this)">
+                                    <i class="{%if z.sub_menu_icon%}{{z.sub_menu_icon}}{%else%}fa fa-fw fa-bar-chart-o{%endif%}"></i>{{z.sub_menu_label}}</a>
+                            </li> 
+                            {% endif %}
+                            {%if z.sub_menu_type=="DocType"%}
+                            {%if z.is_single==0%}
+                            <li>
+                                <a id="{{z.route}}" onclick="go_to_page(this)">
+                                    <i class="{%if z.sub_menu_icon%}{{z.sub_menu_icon}}{%else%}fa fa-fw fa-bar-chart-o{%endif%}"></i>{{z.sub_menu_label}}</a>
+                            </li> 
+                            {%else%}
+                            <li>
+                                <a id="{{z.route}}" onclick="go_to_page(this)">
+                                    <i class="{%if z.sub_menu_icon%}{{z.sub_menu_icon}}{%else%}fa fa-fw fa-bar-chart-o{%endif%}"></i>{{z.sub_menu_label}}</a>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                            {%if z.sub_menu_type=="Report"%}
+                            <li>
+                                <a id="{{z.route}}" onclick="go_to_page(this)">
+                                    <i class="{%if z.sub_menu_icon%}{{z.sub_menu_icon}}{%else%}fa fa-fw fa-bar-chart-o{%endif%}"></i>{{z.sub_menu_label}}</a>
+                            </li> 
+                            {% endif %}
+                            {% else %}
+                            <li>
+                                <a href="/app/{{z.static_link}}">
+                                    <i class="{%if z.sub_menu_icon%}{{z.sub_menu_icon}}{%else%}fa fa-fw fa-bar-chart-o{%endif%}"></i>{{z.sub_menu_label}}</a>
+                            </li>
+                            {% endif %}
+                            {%endfor%}
+                            {%endfor%}
+                        
+                        </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                {% if u.has_sub_menu==0%}
+                {%if u.module_name=="Dashboard"%}
+
+                <li>
+                <a class="menu" onclick="gotodashboard()">
+                    <i class="fi fi-rr-home"></i>{% if center_menu==1 %}<br /> {% endif %}
+                    <span style="font-size: 15px;">{{u.label}}</span>
+                </a>
+            </li>
+            {%else%}
+            
+            {% if u.is_static_link==0%}
+            
+            {%if u.menu_type=="DocType"%}
+            {%if u.is_single_doc==0%}
+            <li>
+                <a class="menu" id="/app/{{u.route}}" onclick="go_to_page(this)">                         
+                    <i class="{%if u.menu_icon%}{{u.menu_icon}}{%else%}fa fa-address-card{%endif%} navbar-icon"></i>{% if center_menu==1 %}<br>  {% endif %}                       
+                    <span style="font-size: 15px;" id="menu_text">{{u.label}}</span>                     
+                </a>
+            </li>
+           
+            {%else%}
+            <li>
+                <a class="menu" id="/app/{{u.route}}" onclick="go_to_page(this)">                         
+                    <i class="{%if u.menu_icon%}{{u.menu_icon}}{%else%}fa fa-address-card{%endif%} navbar-icon"></i>{% if center_menu==1 %}<br>  {% endif %}                     
+                    <span style="font-size: 15px;">{{u.label}}</span>                     
+                </a>
+            </li>
+            
+            {% endif %}
+            {% endif %}
+
+            {%if u.menu_type=="Report"%}
+            <li>
+                <a class="menu" id="{{u.route}}" onclick="go_to_page(this)">                         
+                    <i class="{%if u.menu_icon%}{{u.menu_icon}}{%else%}fa fa-address-card{%endif%} navbar-icon"></i>{% if center_menu==1 %}<br>  {% endif %}                      
+                    <span style="font-size: 15px;">{{u.label}}</span>                     
+                </a>
+            </li>
+            
+            {% endif %}
+            {%if u.menu_type=="Page"%}
+            <li>
+                <a class="menu" id="/app/{{u.route}}" onclick="go_to_page(this)">                         
+                    <i class="{%if u.menu_icon%}{{u.menu_icon}}{%else%}fa fa-address-card{%endif%} navbar-icon"></i>{% if center_menu==1 %}<br>  {% endif %}                   
+                    <span style="font-size: 15px;">{{u.label}}</span>                     
+                </a>
+            </li>           
+            
+            {% endif %}
+            {%else%}
+            <li>
+                <a class="menu" href="{%if u.static_link%}{{u.static_link}}{%endif%}">                         
+                    <i class="{%if u.menu_icon%}{{u.menu_icon}}{%else%}fa fa-address-card{%endif%} navbar-icon"></i>{% if center_menu==1 %}<br>  {% endif %}                  
+                    <span style="font-size: 15px;">{{u.label}}</span>                     
+                </a>
+            </li>
+            {%endif%}
+            {%endif%}
+                {%endif%}
+           {%endfor%}
+        </ul>
+        <style>
+            .col.layout-main-section-wrapper,
+            .col-md-4.col-sm-6.col-xs-8.page-title,
+            .navbar .navbar-brand,
+            .col-md-12.layout-main-section-wrapper{
+                margin-left: 95px;
+            }
+            .col-md-12.layout-main-section-wrapper{
+                max-width: calc(100% - 95px);
+            }
+            .navbar {
+                margin-left: -100px;
+            }
+            ul.submenu li:hover {
+                    background-color:#a7caeb;
+                    padding-left: 30px;
+                }
+                ul.submenu li {
+                    padding-left: 30px;
+                }
+                ul.submenu {
+                    padding-left: 0 !important;
+                }
+                .widget-group .grid-col-2 {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    -moz-column-gap: 15px;
+                    width: 93%;
+                    column-gap: 15px;
+                    row-gap: 15px;
+                    align-items: center;
+                    margin-left: 7%;
+                }
+            .app-logo .logo{
+                {% if side_menu_settings.logo_background_color %}
+                    background:{{side_menu_settings.logo_background_color}};
+                {% endif %}
+                {% if side_menu_settings.logo_bottom_border_color %}
+                    border-bottom:1px solid {{side_menu_settings.logo_bottom_border_color}};
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu{
+                overflow-y: scroll;
+                {% if side_menu_settings.side_bar_background_color %}
+                    background:{{side_menu_settings.side_bar_background_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu::-webkit-scrollbar {
+                display: none;
+            }
+            .main-sidebar .sidebar-menu>li:not(.app-logo):hover>a,.user-info{
+                {% if side_menu_settings.side_bar_hover_color %}
+                    background-color:{{side_menu_settings.side_bar_hover_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu>li>a{
+                {% if side_menu_settings.side_bar_text_color %}
+                    color:{{side_menu_settings.side_bar_text_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .sidebar-menu>li:hover>a{
+                {% if side_menu_settings.side_bar_text_hover_color %}
+                    color:{{side_menu_settings.side_bar_text_hover_color}} !important;
+                {% endif %}
+            }
+            
+
+            .main-sidebar .treeview-menu{
+                {% if side_menu_settings.sub_menu_background_color %}
+                    background:{{side_menu_settings.sub_menu_background_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .treeview-menu>li:hover>a{
+                {% if side_menu_settings.sub_menu_background_hover_color %}
+                    background-color:{{side_menu_settings.sub_menu_background_hover_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .treeview-menu>li>a{
+                {% if side_menu_settings.sub_menu_text_color %}
+                    color:{{side_menu_settings.sub_menu_text_color}} !important;
+                {% endif %}
+            }
+            .main-sidebar .treeview-menu>li:hover>a{
+                {% if side_menu_settings.sub_menu_text_hover_color %}
+                    color:{{side_menu_settings.sub_menu_text_hover_color}} !important;
+                {% endif %}
+            }
+
+            .treeview-menu .user-info {
+                    padding: 9.5px !important;
+                }
+                .app-logo a{
+                     {% if side_menu_settings.logo_background_color %}
+                    background-color: {{side_menu_settings.logo_background_color}};
+                    {%else%}
+                    background-color: #fff;
+                    {%endif%}
+                }
+                  .app-logo a:hover,.app-logo:hover a{
+                      {% if side_menu_settings.logo_background_color %}
+                    background-color: {{side_menu_settings.logo_background_color}};
+                    {%else%}
+                    background-color: #fff;
+                    {%endif%}
+                  }
+                  .app-logo{
+                    width: 96px;
+                    {% if side_menu_settings.logo_background_color %}
+                    background-color: {{side_menu_settings.logo_background_color}};
+                    {%else%}
+                    background-color: #fff;
+                    {%endif%}
+                    border-right: 1px solid #ddd;
+                  }
+        </style>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+
