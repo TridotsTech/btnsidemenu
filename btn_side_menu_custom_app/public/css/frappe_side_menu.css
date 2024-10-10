@@ -1,3 +1,7 @@
+.page-head{
+
+    margin-left: 250px !important;}
+
 .main-section .navbar.navbar-expand.sticky-top .container .navbar-brand.navbar-home{
     display: none !important;
 }
@@ -114,9 +118,9 @@ li.treeview.drop-down:hover .treeview-menu{
 a.navbar-brand.navbar-home {
     display: none;
 }
-ul#navbar-breadcrumbs {
+/* ul#navbar-breadcrumbs {
     margin-left: 95px;
-}
+} */
 ul#navbar-breadcrumbs li:first-child a::before{
    display: none;
 }
