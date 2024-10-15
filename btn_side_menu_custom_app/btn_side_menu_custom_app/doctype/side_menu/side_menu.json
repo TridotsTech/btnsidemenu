@@ -59,7 +59,6 @@
    "label": "Is Group?"
   },
   {
-   "depends_on": "eval:doc.is_group==1",
    "fieldname": "menu_group",
    "fieldtype": "Link",
    "label": "Menu Group",
@@ -125,7 +124,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-03 16:03:04.021651",
+ "modified": "2024-10-15 19:02:30.854896",
  "modified_by": "Administrator",
  "module": "Btn Side Menu Custom App",
  "name": "Side Menu",

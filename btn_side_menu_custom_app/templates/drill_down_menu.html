@@ -187,15 +187,19 @@
             
                 {% for menu_group, items in grouped_menu_items.items() %}
                     <li class="menu-group {%if loop.index==1%}mar-60{%endif%}">
+                        {%if menu_group%}
                         <p class="menu-group menu-group-big">{{ menu_group }}</p>
                         <p class="menu-group menu-group-small" >...</p>
+                        {%endif%}
                         {% for u in items %}
-                        <li class="treeview drop-down"> 
+                        <li class="treeview drop-down" style="{%if loop.index==1 and not menu_group%}margin-top:10px{%endif%}"> 
                             <a class="menu" {% if not u.submenu %}
                                 {% if u.menutype == "Dashboard" %}
                                     href="/app/dashboard-view/{{ u.menu_doc | lower | replace(' ', '-') }}"
                                 {% elif u.menutype == "Report" %}
                                     href="/app/query-report/{{ u.menu_doc }}"
+                                {% elif u.is_static_link ==1 %}
+                                    href="/app/{{u.static_link}}"
                                 {% else %}
                                     href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"
                                 {% endif %}
@@ -394,9 +398,9 @@
                         if ($(window).width() > 768) {
                             if (sidebarMenu.style.width === '70px') {
                                 $('.menu-label').css("display", "contents");
-                                $('.col .layout-main-section-wrapper').css("margin-left", "249px");
+                                $('.col .layout-main-section-wrapper').css("margin-left", "{{side_menu_settings.set_width}}px");
                                 $('.fa-angle-right').css("display", "block");
-                                $('.sidebar-menu').css("width", "249px");
+                                $('.sidebar-menu').css("width", "{{side_menu_settings.set_width}}px");
                                 $('.sidebar-menu').removeClass("small-menu");
                                 $('body').removeClass("sidebar-small-menu");
                                 $('body').addClass("sidebar-big-menu");
@@ -422,7 +426,7 @@
                         }
                         else{
                             $('.menu-label').css("display", "contents");
-                            $('.col .layout-main-section-wrapper').css("margin-left", "249px");
+                            $('.col .layout-main-section-wrapper').css("margin-left", "{{side_menu_settings.set_width}}px");
                             $('.fa-angle-right').css("display", "block");
                             $('.sidebar-menu').css("width", "249px");
                             $('.sidebar-menu').removeClass("small-menu");
@@ -771,7 +775,44 @@
                     position: fixed !important;
                     width: {{ side_menu_settings.set_width }}px !important;
                     height: 60px;
+                    {%if side_menu_settings.side_bar_background_color=="#ffffff"%}
+                       border-right: 1px solid #ededed !important;
+    border-bottom: 1px solid #ededed !important;
+                        height: 48px !important;
+                    
+                    {%endif%}
                 }
+                 {%if side_menu_settings.side_bar_background_color=="#ffffff"%}
+                 .sidebar-big-menu li.app-logo .logo{
+                        width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;height: 48px;
+    justify-content: center;
+                 }
+                 img#app-logo{
+                    height:60px !important;
+                    margin-top: 0 !important;
+                 }
+                 img.small_menu_logo{
+                        width: 70px !important;
+    padding: 0 5px 0 8px;margin-left: 0;
+                 }
+                 .app-logo .logo {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .main-sidebar .vertical-nav,.vertical-nav li {
+    border-right: 1px solid #ededed;
+}
+.vertical-nav .sub-menu li{
+    background-color: #f5f5f5 !important;
+}
+.sub-menu .treeview-head div{
+    color:#222;
+}
+                 {%endif%}
                 .sidebar-menu .app-logo{
                     border: none !important;
                 }
@@ -779,6 +820,10 @@
                     position: fixed !important;
                     width: 70px !important;
                     height: 60px;
+                      {%if side_menu_settings.side_bar_background_color=="#ffffff"%}
+                      height:48px;border-bottom: 1px solid #ededed;
+    border-right: 1px solid #ededed;
+                      {%endif%}
                 }
                 
                 .sidebar-small-menu .mar-60{
@@ -804,6 +849,10 @@
                     top:60px !important;
                     overflow-y: auto !important;
                     height: calc(100vh - 60px) !important;
+                    {%if side_menu_settings.side_bar_background_color=="#ffffff"%}
+                        border-right: 1px solid #ededed;
+                        top: 48px !important;
+                    {%endif%}
                    
                 }
                 .sidebar-small-menu .main-sidebar .sidebar-menu{
@@ -942,6 +991,12 @@
                     .sidebar-big-menu .col-md-12.layout-main-section-wrapper{
                         margin-left: 0 !important;
                     }
+                }
+                .page-head{
+                    margin-left: {{side_menu_settings.set_width}}px !important;
+                }
+                .sidebar-small-menu  .page-head{
+                    margin-left:70px !important
                 }
             </style>
         </section>
