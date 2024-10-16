@@ -195,7 +195,7 @@
                         <li class="treeview drop-down" style="{%if loop.index==1 and not menu_group%}margin-top:10px{%endif%}"> 
                          
                              {%if not u.submenu %}
-                                  {% if u.menu_type == "Workspace" or u.menu_type == "Doctype" %}
+                                  {% if u.menu_type == "Workspace" or u.menu_type == "DocType" %}
                                         <a class="menu" id="{{ u.menu_doc | lower | replace(' ', '-') }}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
 
                                   {%endif%}
