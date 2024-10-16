@@ -193,17 +193,7 @@
                         {%endif%}
                         {% for u in items %}
                         <li class="treeview drop-down" style="{%if loop.index==1 and not menu_group%}margin-top:10px{%endif%}"> 
-                           <!--  <a class="menu" {% if not u.submenu %}
-                                {% if u.menutype == "Dashboard" %}
-                                    href="/app/dashboard-view/{{ u.menu_doc | lower | replace(' ', '-') }}"
-                                {% elif u.menutype == "Report" %}
-                                    href="/app/query-report/{{ u.menu_doc }}"
-                                {% elif u.is_static_link ==1 %}
-                                    href="/app/{{u.static_link}}"
-                                {% else %}
-                                    href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"
-                                {% endif %}
-                            {% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;"> -->
+                         
                              {%if not u.submenu %}
                                   {% if u.menutype == "Workspace" or u.menutype == "Doctype" %}
                                         <a class="menu" id="{{ u.menu_doc | lower | replace(' ', '-') }}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
