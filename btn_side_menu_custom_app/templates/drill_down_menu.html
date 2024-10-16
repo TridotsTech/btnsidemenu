@@ -195,15 +195,17 @@
                         <li class="treeview drop-down" style="{%if loop.index==1 and not menu_group%}margin-top:10px{%endif%}"> 
                             <a class="menu" {% if not u.submenu %}
                                 {% if u.menutype == "Dashboard" %}
-                                    href="/app/dashboard-view/{{ u.menu_doc | lower | replace(' ', '-') }}"
+                                    id="{{ u.menu_doc | lower | replace(' ', '-') }}"
                                 {% elif u.menutype == "Report" %}
-                                    href="/app/query-report/{{ u.menu_doc }}"
+                                    id="query-report/{{ u.menu_doc }}"
+                                {% elif u.menutype == "Workspace" %}
+                                    id="query-report/{{ u.menu_doc }}"
                                 {% elif u.is_static_link ==1 %}
                                     href="/app/{{u.static_link}}"
                                 {% else %}
                                     href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"
                                 {% endif %}
-                            {% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;">
+                            {% endif %} onclick="{%if u.is_static_link ==1%}toggleSubMenu(this){%else%}go_to_page(this){%endif%}" style="text-decoration: none; max-width: 100%;">
                                 <span class="span" style="font-size: 15px;">
                                     {% if u.icon_image %}
                                         <img src="{{ u.icon_image }}" class="image-icon" style="padding: 0px; height: 18px; margin-right: 10px;">
@@ -282,6 +284,19 @@
                                                             {% elif z.sub_menu_type == "Dashboard" %}
                                                                 <li>
                                                                     <a id="/app/dashboard-view/{{ z.sub_menu_doc }}" onclick="go_to_page(this)" style="display: flex;">
+                                                                        {% if z.sub_menu_image_icon %}
+                                                                            <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
+                                                                        {% else %}
+                                                                            <b class="pointer">-</b>
+                                                                            {% if center_menu == 1 %}<br />{% endif %}
+                                                                        {% endif %}
+                                                                        <span class="submenu-lable">{{ z.sub_menu_label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+                                                            {% elif z.sub_menu_type == "Workspace" %}
+                                                                <li>
+                                                                    <a id="{{ z.sub_menu_doc }}" onclick="go_to_page(this)" style="display: flex;">
                                                                         {% if z.sub_menu_image_icon %}
                                                                             <img src="{{ z.sub_menu_image_icon }}" alt="Mitigations" class="navbar-image" style="width: 22px;">
                                                                         {% else %}
