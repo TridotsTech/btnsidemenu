@@ -334,13 +334,7 @@ i.fa.fi-rr-menu-burger{
 .sidebar-small-menu .menu-group-small{
     display: block;
 }
-.sidebar-big-menu li.app-logo .logo {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #043b75;
-}
+
 p.menu-group-small {
     display: block;
     font-size: 14px;
