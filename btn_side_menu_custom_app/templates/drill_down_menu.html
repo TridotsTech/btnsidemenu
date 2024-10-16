@@ -402,14 +402,17 @@
                         }
                         activeSubMenu.previousElementSibling.style.backgroundColor = "{{ side_menu_settings.side_bar_background_color }}";
                     }
-
                     const isSubMenuOpen = submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "";
                     if (isSubMenuOpen) {
                         submenu.style.maxHeight = "100vh";
                         element.querySelector("i.fa-angle-right").classList.replace("fa-angle-right", "fa-angle-down");
                         element.style.backgroundColor = "{{ side_menu_settings.side_bar_hover_color }}";
                         menuLabel.style.color = "{{side_menu_settings.side_bar_text_hover_color}}";
-                        navbarIcon.style.color = "{{side_menu_settings.side_bar_text_hover_color}}";
+                        if(navbarIcon)
+                        {
+                            navbarIcon.style.color = "{{side_menu_settings.side_bar_text_hover_color}}";
+
+                        }
                         console.log(menuLabel.style.color)
                         activeSubMenu = submenu;
                     } else {
