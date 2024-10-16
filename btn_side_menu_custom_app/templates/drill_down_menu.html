@@ -32,7 +32,27 @@
                         {% endif %}
                         {% for u in items %}
                             <li class="treeview drop-down">
-                                <a class="menu" {% if not u.submenu %}href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"{% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;">
+                                 {%if not u.submenu %}
+                                  {% if u.menu_type == "Workspace" or u.menu_type == "DocType" %}
+                                        <a class="menu" id="{{ u.menu_doc | lower | replace(' ', '-') }}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
+
+                                  {%endif%}
+                                  {% if u.menu_type == "Dashboard"%}
+                                        <a class="menu" id="dashboard-view/{{u.menu_doc}}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
+
+                                  {%endif%}
+                                  {% if u.menu_type == "Report"%}
+                                        <a class="menu" id="query-report/{{u.menu_doc}}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
+
+                                  {%endif%}
+                                  {% if u.is_static_link==1%}
+                                        <a class="menu" href="{{u.static_link}}"  style="text-decoration: none; max-width: 100%;"> 
+
+                                  {%endif%}
+                                {%else%}
+                                     <a class="menu" {% if not u.submenu %}href="/app/{{ u.menu_doc | lower | replace(' ', '-') }}"{% endif %} onclick="toggleSubMenu(this)" style="text-decoration: none; max-width: 100%;">
+                                {%endif%}
+                               
                                     <span class="span" style="font-size: 15px;">
                                         {% if u.icon_image %}
                                             <img src="{{ u.icon_image }}" class="image-icon" style="padding: 0px; height: 18px;margin-right: 10px;">
