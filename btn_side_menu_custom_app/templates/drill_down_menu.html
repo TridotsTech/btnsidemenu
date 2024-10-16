@@ -195,15 +195,15 @@
                         <li class="treeview drop-down" style="{%if loop.index==1 and not menu_group%}margin-top:10px{%endif%}"> 
                          
                              {%if not u.submenu %}
-                                  {% if u.menutype == "Workspace" or u.menutype == "Doctype" %}
+                                  {% if u.menu_type == "Workspace" or u.menu_type == "Doctype" %}
                                         <a class="menu" id="{{ u.menu_doc | lower | replace(' ', '-') }}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
 
                                   {%endif%}
-                                  {% if u.menutype == "Dashboard"%}
+                                  {% if u.menu_type == "Dashboard"%}
                                         <a class="menu" id="dashboard-view/{{u.menu_doc}}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
 
                                   {%endif%}
-                                  {% if u.menutype == "Report"%}
+                                  {% if u.menu_type == "Report"%}
                                         <a class="menu" id="query-report/{{u.menu_doc}}" onclick="go_to_page(this)" style="text-decoration: none; max-width: 100%;"> 
 
                                   {%endif%}
